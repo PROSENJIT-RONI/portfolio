@@ -79,6 +79,11 @@ export default function ContactForm() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const honeypotValue = new FormData(event.currentTarget).get("botcheck");
+    if (typeof honeypotValue === "string" && honeypotValue.trim()) {
+      return;
+    }
+
     const nextErrors = validateForm(values);
     setErrors(nextErrors);
 
@@ -114,10 +119,23 @@ export default function ContactForm() {
         }),
       });
 
-      const data = await response.json();
+      const data: unknown = await response.json();
 
-      if (!response.ok || data?.success !== "true") {
-        throw new Error(data?.message ?? "Submission failed");
+      if (
+        !response.ok ||
+        typeof data !== "object" ||
+        data === null ||
+        !("success" in data) ||
+        data.success !== true
+      ) {
+        const message =
+          typeof data === "object" &&
+          data !== null &&
+          "message" in data &&
+          typeof data.message === "string"
+            ? data.message
+            : "Submission failed";
+        throw new Error(message);
       }
 
       setValues(initialValues);

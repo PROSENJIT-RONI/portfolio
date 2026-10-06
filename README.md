@@ -27,21 +27,19 @@ npm run start
 
 ## Contact form setup
 
-The portfolio uses Web3Forms for the contact form.
+The portfolio uses Web3Forms for the contact form. Configure the Web3Forms access key for the receiving address `prosenjitswarnakar2002@gmail.com`.
 
-Create a local environment file:
+For local development, create `.env.local` in the project root using `.env.example` as a reference, then set the real key there:
 
-```bash
-cp .env.example .env.local
+```env
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=YOUR_REAL_ACCESS_KEY
 ```
 
-Then add:
+`.env.local` is ignored by Git and must never be committed. The tracked `.env.example` intentionally contains an empty value only.
 
-```bash
-NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_access_key_here
-```
+For production deployment, add `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` as an Environment Variable in the Vercel project settings for the environments you deploy (Production, Preview, and/or Development). Set its value to the key from Web3Forms, configured to deliver submissions to the receiving address above, then redeploy so Next.js can include the value in the build. Never add the real key to source code or `.env.example`.
 
-The contact form will gracefully show a fallback message if the key is missing instead of falsely claiming success.
+The form submits to `https://api.web3forms.com/submit`. If the key is missing, it shows a configuration message and does not send a request or report a successful submission.
 
 ## Resume
 
