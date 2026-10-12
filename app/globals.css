@@ -60,16 +60,42 @@ body {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   min-height: 100%;
   display: flex;
   flex-direction: column;
   background:
-    radial-gradient(circle at top, rgba(124, 156, 255, 0.14), transparent 30%),
-    linear-gradient(180deg, #060b14 0%, #0a1220 100%);
+    radial-gradient(ellipse 70rem 50rem at 50% 45%, transparent 48%, rgba(2, 5, 12, 0.38) 100%),
+    linear-gradient(180deg, #060913 0%, #080d18 52%, #090f1b 100%);
+  background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: -18%;
+  background:
+    radial-gradient(ellipse 54rem 38rem at 78% 8%, rgba(124, 156, 255, 0.14), transparent 72%),
+    radial-gradient(ellipse 42rem 36rem at 12% 42%, rgba(167, 139, 250, 0.09), transparent 74%);
+  content: "";
+  pointer-events: none;
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: ambient-drift 32s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(-1.5%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(1.5%, 1%, 0) scale(1.04);
+  }
 }
 
 * {
