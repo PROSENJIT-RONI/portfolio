@@ -3,6 +3,77 @@ import ContactForm from "./components/ContactForm";
 import SiteHeader from "./components/SiteHeader";
 import styles from "./page.module.css";
 
+type SocialNetwork = "github" | "linkedin" | "instagram" | "linktree" | "facebook";
+
+function SocialIcon({ network }: { network: SocialNetwork }) {
+  const commonProps = {
+    "aria-hidden": true as const,
+    className: styles.socialIcon,
+    fill: "none",
+    stroke: "currentColor",
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    strokeWidth: 1.8,
+    viewBox: "0 0 24 24",
+  };
+
+  switch (network) {
+    case "github":
+      return (
+        <svg {...commonProps} fill="currentColor" stroke="none">
+          <path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.56.1.76-.24.76-.54v-2.08c-3.1.68-3.75-1.32-3.75-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.02-.7.08-.69.08-.69 1.12.08 1.7 1.14 1.7 1.14 1 .1.7 1.99 3.13 1.51.1-.73.4-1.23.69-1.52-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.15 3.05-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.3-2.62 5.24-5.12 5.51.4.35.75 1.03.75 2.08v3.08c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z" />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg {...commonProps} fill="currentColor" stroke="none">
+          <path d="M5.2 8.4H1.8V22h3.4V8.4ZM3.5 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM22.2 14.2c0-4.1-2.2-6-5.1-6a4.4 4.4 0 0 0-4 2.2V8.4H9.7V22h3.4v-6.7c0-1.8.3-3.5 2.6-3.5s2.3 2 2.3 3.6V22h3.4l.8-7.8Z" />
+        </svg>
+      );
+    case "instagram":
+      return (
+        <svg {...commonProps}>
+          <rect x="3" y="3" width="18" height="18" rx="5" />
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="17.5" cy="6.8" r=".8" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "linktree":
+      return (
+        <svg {...commonProps}>
+          <path d="M12 4v16M5 8l7 4 7-4M5 16l7-4 7 4" />
+          <circle cx="12" cy="4" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="5" cy="8" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="19" cy="8" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="5" cy="16" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="19" cy="16" r="1.5" fill="currentColor" stroke="none" />
+          <circle cx="12" cy="20" r="1.5" fill="currentColor" stroke="none" />
+        </svg>
+      );
+    case "facebook":
+      return (
+        <svg {...commonProps} fill="currentColor" stroke="none">
+          <path d="M13.6 22v-9h3l.45-3.5H13.6V7.25c0-1.02.28-1.72 1.74-1.72h1.86V2.4c-.32-.04-1.42-.14-2.7-.14-2.68 0-4.51 1.64-4.51 4.65V9.5H7v3.5h2.99v9h3.61Z" />
+        </svg>
+      );
+  }
+}
+
+function SocialLink({
+  network,
+  children,
+}: {
+  network: SocialNetwork;
+  children: string;
+}) {
+  return (
+    <>
+      <SocialIcon network={network} />
+      <span>{children}</span>
+    </>
+  );
+}
+
 type FeaturedProject = {
   slug: "spliteasy" | "facelive";
   number: string;
@@ -243,7 +314,7 @@ export default function Home() {
                 rel="noreferrer"
                 aria-label="Visit Prosenjit Swarnakar on GitHub"
               >
-                GitHub
+                <SocialLink network="github">GitHub</SocialLink>
               </a>
               <a
                 href="https://www.linkedin.com/in/prosenjit-swarnakar-5baa59236/"
@@ -251,7 +322,7 @@ export default function Home() {
                 rel="noreferrer"
                 aria-label="Visit Prosenjit Swarnakar on LinkedIn"
               >
-                LinkedIn
+                <SocialLink network="linkedin">LinkedIn</SocialLink>
               </a>
             </div>
 
@@ -603,7 +674,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   aria-label="Visit Prosenjit Swarnakar on GitHub"
                 >
-                  GitHub
+                  <SocialLink network="github">GitHub</SocialLink>
                 </a>
                 <a
                   href="https://www.linkedin.com/in/prosenjit-swarnakar-5baa59236/"
@@ -611,7 +682,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   aria-label="Visit Prosenjit Swarnakar on LinkedIn"
                 >
-                  LinkedIn
+                  <SocialLink network="linkedin">LinkedIn</SocialLink>
                 </a>
                 <a
                   href="https://instagram.com/prosenjit_02"
@@ -619,7 +690,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   aria-label="Visit Prosenjit Swarnakar on Instagram"
                 >
-                  Instagram
+                  <SocialLink network="instagram">Instagram</SocialLink>
                 </a>
                 <a
                   href="https://linktr.ee/Prosenjit_Swarnakar"
@@ -627,7 +698,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   aria-label="Visit Prosenjit Swarnakar on Linktree"
                 >
-                  Linktree
+                  <SocialLink network="linktree">Linktree</SocialLink>
                 </a>
                 <a
                   href="https://www.facebook.com/prosenjit.swarnakar.393"
@@ -635,7 +706,7 @@ export default function Home() {
                   rel="noopener noreferrer"
                   aria-label="Visit Prosenjit Swarnakar on Facebook"
                 >
-                  Facebook
+                  <SocialLink network="facebook">Facebook</SocialLink>
                 </a>
               </div>
             </div>
@@ -706,7 +777,7 @@ export default function Home() {
               rel="noopener noreferrer"
               aria-label="Visit Prosenjit Swarnakar on GitHub"
             >
-              GitHub
+              <SocialLink network="github">GitHub</SocialLink>
             </a>
             <a
               href="https://www.linkedin.com/in/prosenjit-swarnakar-5baa59236/"
@@ -714,7 +785,7 @@ export default function Home() {
               rel="noopener noreferrer"
               aria-label="Visit Prosenjit Swarnakar on LinkedIn"
             >
-              LinkedIn
+              <SocialLink network="linkedin">LinkedIn</SocialLink>
             </a>
             <a
               href="https://instagram.com/prosenjit_02"
@@ -722,7 +793,7 @@ export default function Home() {
               rel="noopener noreferrer"
               aria-label="Visit Prosenjit Swarnakar on Instagram"
             >
-              Instagram
+              <SocialLink network="instagram">Instagram</SocialLink>
             </a>
             <a
               href="https://linktr.ee/Prosenjit_Swarnakar"
@@ -730,7 +801,7 @@ export default function Home() {
               rel="noopener noreferrer"
               aria-label="Visit Prosenjit Swarnakar on Linktree"
             >
-              Linktree
+              <SocialLink network="linktree">Linktree</SocialLink>
             </a>
             <a
               href="https://www.facebook.com/prosenjit.swarnakar.393"
@@ -738,7 +809,7 @@ export default function Home() {
               rel="noopener noreferrer"
               aria-label="Visit Prosenjit Swarnakar on Facebook"
             >
-              Facebook
+              <SocialLink network="facebook">Facebook</SocialLink>
             </a>
           </div>
 
